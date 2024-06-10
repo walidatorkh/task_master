@@ -1,6 +1,11 @@
 # Test data for creating a new task
 from datetime import datetime
 
+
+# Define the API endpoint
+url = "https://taskmaster.com/api/tasks"
+
+
 current_date = datetime.now().strftime("%Y-%m-%d")
 create_task_payload = {
     "title": "Complete API Testing Practice",

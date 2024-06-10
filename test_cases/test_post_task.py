@@ -1,9 +1,6 @@
 import pytest
 from utils.request_utils import post_request
-from data.test_data import create_task_payload
-
-# Define the API endpoint
-url = "https://taskmaster.com/api/tasks"
+from data.test_data import create_task_payload, url
 
 
 @pytest.fixture
