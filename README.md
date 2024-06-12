@@ -8,85 +8,65 @@ I understand how the feature works, and now I will describe to you which tests I
 ## Automation Framework Design for TaskMaster API
 
 ### 1. Test Strategy Definition:
-- Define scope: Determine endpoints to be tested and types of tests.
+- Define scope: Determine endpoints to be tested and types of tests: focus on testing the functionality of creating a new task (POST
+request), updating an existing task (PUT request), and retrieving task details (GET
+request).
+
 - Test environment setup: Base URL, authentication mechanism, prerequisite data.
 
 ### 2. Framework Architecture:
-- Choose testing framework: pytest, unittest, or custom framework. (choosen pytest)
+- Choose testing framework: pytest.
 - Organize structure: Modular components for maintainability.
-- Reusable utilities: Helper functions for HTTP requests, response parsing, authentication.
 
 ### 3. Test Data Management:
 - Efficient data handling: Fixtures or data factories.
 - Separation: Test data from code for maintainability.
-- Mock data: For scenarios not requiring actual API calls.
 
 ### 4. Test Case Design:
 - Write test cases: Based on identified scenarios (positive/negative).
-- Grouping: Organize into suites/modules.
 - Assertions: Validate expected API behavior (status codes, response payloads).
 
-### 5. Execution and Reporting:
-- Run tests: Using chosen framework.
-- Reporting: Detailed test reports (pass/fail status, execution time).
-- CI Integration: Automated execution on code changes or schedules.
-
-### 6. Error Handling and Debugging:
-- Exception handling: Gracefully handle errors during execution.
-- Logging: Capture request/response details, stack traces.
-
-### 7. Integration with Version Control:
+### 5. Integration with Version Control:
 - Version control: Store scripts and resources (Git).
 - Branching: Manage feature development, bug fixes.
 
-### 8. Maintenance and Updates:
-- Regular review: Update test cases to reflect API changes.
-- Documentation: Framework guidelines, setup instructions.
-- Feedback incorporation: Improve test coverage and efficiency.
 
-## Test Scenarios
+## TaskMaster Test Scenarios
 
 ### Test Scenario 1: Create Task
 
-| Test Case ID | Description                 | Endpoint  | Headers          | Payload          | Expected Status | Actual Status | Pass/Fail | Notes |
-|--------------|-----------------------------|-----------|------------------|------------------|-----------------|---------------|-----------|-------|
-| TC1          | Successful creation         | `/tasks`  | Valid headers    | Valid payload    | 200             |               |           |       |
-| TC2          | Non-existent endpoint       | `/@tasks` | Valid headers    | Valid payload    | 404             |               |           |       |
-| TC3          | Server error due to headers | `/tasks`  | Invalid headers  | Valid payload    | 500             |               |           |       |
+| Test Case ID | Description                                   | Endpoint     | Method | Headers                            | Payload                                                                                                                     | Expected Status | Actual Status | Pass/Fail | Notes |
+|--------------|-----------------------------------------------|--------------|--------|-----------------------------------|-----------------------------------------------------------------------------------------------------------------------------|-----------------|---------------|-----------|-------|
+| TC_01        | Valid task creation                           | /tasks       | POST   | Authorization: Bearer 12345       | {"title": "Complete API Testing Practice", "description": "Write test cases and execute them for API testing practices", "due_date": "date of now"}                                     | 200             |               |           |       |
+| TC_02        | Missing authorization token                   | /tasks       | POST   |                                   | {"title": "Complete API Testing Practice", "description": "Write test cases and execute them for API testing practices", "due_date": "date of now"}                                     | 500             |               |           |       |
+| TC_03        | Empty title                                   | /tasks       | POST   | Authorization: Bearer 12345       | {"title": "", "description": "Write test cases and execute them for API testing practices", "due_date": "date of now"}                                                                 | 500             |               |           |       |
+| TC_04        | Title too long                                | /tasks       | POST   | Authorization: Bearer 12345       | {"title": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", "description": "Write test cases and execute them for API testing practices", "due_date": "date of now"} | 500             |               |           |       |
+| TC_05        | Empty description                             | /tasks       | POST   | Authorization: Bearer 12345       | {"title": "Complete API Testing Practice", "description": "", "due_date": "date of now"}                                                                                               | 500             |               |           |       |
+| TC_06        | Description too long                          | /tasks       | POST   | Authorization: Bearer 12345       | {"title": "Complete API Testing Practice", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "due_date": "date of now"} | 500             |               |           |       |
+| TC_07        | Non-existent URL                              | /tasks/1234  | POST   | Authorization: Bearer 12345       | {"title": "Complete API Testing Practice", "description": "Write test cases and execute them for API testing practices", "due_date": "date of now"}                                     | 404             |               |           |       |
+| TC_08        | Non-valid due_date format                     | /tasks       | POST   | Authorization: Bearer 12345       | {"title": "Complete API Testing Practice", "description": "Write test cases and execute them for API testing practices", "due_date": "not_a_valid_date"}                                   | 500             |               |           |       |
 
-**Steps:**
-1. Use the appropriate HTTP method (POST) for creating tasks.
-2. Send requests to the specified endpoints with given headers and payloads.
-3. Verify the response status code matches the expected status.
+## Test Scenario 2: Update Task
 
-### Test Scenario 2: Update Task
-
-| Test Case ID | Description                 | Endpoint       | Headers          | Payload          | Expected Status | Actual Status | Pass/Fail | Notes |
-|--------------|-----------------------------|----------------|------------------|------------------|-----------------|---------------|-----------|-------|
-| TC4          | Successful update           | `/tasks/1`     | Valid headers    | Valid payload    | 200             |               |           |       |
-| TC5          | Non-existent task ID        | `/tasks/222`   | Valid headers    | Valid payload    | 404             |               |           |       |
-| TC6          | Server error due to headers | `/tasks/1`     | Invalid headers  | Valid payload    | 500             |               |           |       |
-
-**Steps:**
-1. Use the appropriate HTTP method (PUT) for updating tasks.
-2. Send requests to the specified endpoints with given headers and payloads.
-3. Verify the response status code matches the expected status.
-
-
-### Test Scenario 3: Get Task (GET)
-
+| Test Case ID | Description                                   | Endpoint          | Method | Headers                            | Payload                                                                                                                     | Expected Status | Actual Status | Pass/Fail | Notes |
+|--------------|-----------------------------------------------|-------------------|--------|-----------------------------------|-----------------------------------------------------------------------------------------------------------------------------|-----------------|---------------|-----------|-------|
+| TC_01        | Valid task update                             | /tasks/1          | PUT    | Authorization: Bearer 12345       | {"title": "Updated Title", "description": "Updated description", "due_date": "date of now"}                                | 200             |               |           |       |
+| TC_02        | Missing authorization token                   | /tasks/1          | PUT    |                                   | {"title": "Updated Title", "description": "Updated description", "due_date": "date of now"}                                | 500             |               |           |       |
+| TC_03        | Empty title                                   | /tasks/1          | PUT    | Authorization: Bearer 12345       | {"title": "", "description": "Updated description", "due_date": "date of now"}                                              | 500             |               |           |       |
+| TC_04        | Title too long                                | /tasks/1          | PUT    | Authorization: Bearer 12345       | {"title": "Updated Title with a very long description that exceeds the character limit", "description": "Updated description", "due_date": "date of now"}                                 | 500             |               |           |       |
+| TC_05        | Empty description                             | /tasks/1          | PUT    | Authorization: Bearer 12345       | {"title": "Updated Title", "description": "", "due_date": "date of now"}                                                    | 500             |               |           |       |
+| TC_06        | Description too long                          | /tasks/1          | PUT    | Authorization: Bearer 12345       | {"title": "Updated Title", "description": "Updated description that exceeds the character limit", "due_date": "date of now"} | 500             |               |           |       |
+| TC_07        | Non-existent task ID                          | /tasks/999        | PUT    | Authorization: Bearer 12345       | {"title": "Updated Title", "description": "Updated description", "due_date": "date of now"}                                | 404             |               |           |       |
+| TC_08        | Non-valid due_date format                     | /tasks/1          | PUT    | Authorization: Bearer 12345       | {"title": "Updated Title", "description": "Updated description", "due_date": "not_a_valid_date"}                            | 500             |               |           |       |
 
 ## Test Scenario 3: Get Task
 
-| Test Case ID | Description                 | Endpoint       | Headers          | Expected Status | Actual Status | Pass/Fail | Notes |
-|--------------|-----------------------------|----------------|------------------|-----------------|---------------|-----------|-------|
-| TC7          | Valid task                  | `/tasks/1`     | Valid headers    | 200             |               |           |       |
-| TC8          | Non-existent task ID        | `/tasks/22`    | Valid headers    | 404             |               |           |       |
-| TC9          | Server error due to headers | `/tasks/1`     | Invalid headers  | 500             |               |           |       |
+| Test Case ID | Description                                   | Endpoint          | Method | Headers                            | Payload | Expected Status | Actual Status | Pass/Fail | Notes |
+|--------------|-----------------------------------------------|-------------------|--------|-----------------------------------|---------|-----------------|---------------|-----------|-------|
+| TC_01        | Valid task retrieval                          | /tasks/1          | GET    | Authorization: Bearer 12345       |         | 200             |               |           |       |
+| TC_02        | Missing authorization token                   | /tasks/1          | GET    |                                   |         | 500             |               |           |       |
+| TC_03        | Non-existent task ID                          | /tasks/999        | GET    | Authorization: Bearer 12345       |         | 404             |               |           |       |
+| TC_04        | Non-existent URL                              | /tasks/1234       | GET    | Authorization: Bearer 12345       |         | 404             |               |           |       |
 
-**Steps:**
-1. Use the appropriate HTTP method (GET) for retrieving tasks.
-2. Send requests to the specified endpoints with given headers.
-3. Verify the response status code matches the expected status.
 
 
