@@ -31,7 +31,7 @@ request).
 - Branching: Manage feature development, bug fixes.
 
 ### 6. Issues
-- The specifications do not describe the URL of endpoint.
+- The specifications do not describe the URL.
 - The server response time is not described in the specifications.
 - The maximum number of requests is not described.
 
