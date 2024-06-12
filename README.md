@@ -1,5 +1,5 @@
 # task_master
-About testing the API of an online task management service named "TaskMaster". 
+
 ## Test Plan
 
 ### I am starting from the premise that I have read the specification document, 
