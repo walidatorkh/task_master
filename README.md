@@ -44,17 +44,49 @@ I understand how the feature works, and now I will describe to you which tests I
 - Documentation: Framework guidelines, setup instructions.
 - Feedback incorporation: Improve test coverage and efficiency.
 
-### Test scenario:
+## Test Scenarios
 
-| No. | Request Type | Endpoint              | Test Description                                             | Expected Status Code | Notes                                      |
-|-----|--------------|-----------------------|--------------------------------------------------------------|----------------------|--------------------------------------------|
-| 1   | POST         | /tasks                | Successfully create a new task                               | 200                  | Verify the task is created with correct data |
-| 2   | POST         | /tasks                | Error when creating a task with missing fields               | 400                  | Verify an error is returned for invalid data |
-| 3   | POST         | /tasks                | Internal server error when creating a task                   | 500                  | Simulate server error                       |
-| 4   | PUT          | /tasks/{taskId}       | Successfully update an existing task                         | 200                  | Verify the task is updated with correct data |
-| 5   | PUT          | /tasks/{taskId}       | Error when updating a non-existent task                      | 404                  | Verify an error is returned for a non-existent task |
-| 6   | PUT          | /tasks/{taskId}       | Internal server error when updating a task                   | 500                  | Simulate server error                       |
-| 7   | GET          | /tasks/{taskId}       | Successfully retrieve details of an existing task            | 200                  | Verify the task details are correct         |
-| 8   | GET          | /tasks/{taskId}       | Error when retrieving details of a non-existent task         | 404                  | Verify an error is returned for a non-existent task |
-| 9   | GET          | /tasks/{taskId}       | Internal server error when retrieving task details           | 500                  | Simulate server error                       |
+### Test Scenario 1: Create Task
+
+| Test Case ID | Description                 | Endpoint  | Headers          | Payload          | Expected Status | Actual Status | Pass/Fail | Notes |
+|--------------|-----------------------------|-----------|------------------|------------------|-----------------|---------------|-----------|-------|
+| TC1          | Successful creation         | `/tasks`  | Valid headers    | Valid payload    | 200             |               |           |       |
+| TC2          | Non-existent endpoint       | `/@tasks` | Valid headers    | Valid payload    | 404             |               |           |       |
+| TC3          | Server error due to headers | `/tasks`  | Invalid headers  | Valid payload    | 500             |               |           |       |
+
+**Steps:**
+1. Use the appropriate HTTP method (POST) for creating tasks.
+2. Send requests to the specified endpoints with given headers and payloads.
+3. Verify the response status code matches the expected status.
+
+### Test Scenario 2: Update Task
+
+| Test Case ID | Description                 | Endpoint       | Headers          | Payload          | Expected Status | Actual Status | Pass/Fail | Notes |
+|--------------|-----------------------------|----------------|------------------|------------------|-----------------|---------------|-----------|-------|
+| TC4          | Successful update           | `/tasks/1`     | Valid headers    | Valid payload    | 200             |               |           |       |
+| TC5          | Non-existent task ID        | `/tasks/222`   | Valid headers    | Valid payload    | 404             |               |           |       |
+| TC6          | Server error due to headers | `/tasks/1`     | Invalid headers  | Valid payload    | 500             |               |           |       |
+
+**Steps:**
+1. Use the appropriate HTTP method (PUT) for updating tasks.
+2. Send requests to the specified endpoints with given headers and payloads.
+3. Verify the response status code matches the expected status.
+
+
+### Test Scenario 3: Get Task (GET)
+
+
+## Test Scenario 3: Get Task
+
+| Test Case ID | Description                 | Endpoint       | Headers          | Expected Status | Actual Status | Pass/Fail | Notes |
+|--------------|-----------------------------|----------------|------------------|-----------------|---------------|-----------|-------|
+| TC7          | Valid task                  | `/tasks/1`     | Valid headers    | 200             |               |           |       |
+| TC8          | Non-existent task ID        | `/tasks/22`    | Valid headers    | 404             |               |           |       |
+| TC9          | Server error due to headers | `/tasks/1`     | Invalid headers  | 500             |               |           |       |
+
+**Steps:**
+1. Use the appropriate HTTP method (GET) for retrieving tasks.
+2. Send requests to the specified endpoints with given headers.
+3. Verify the response status code matches the expected status.
+
 
