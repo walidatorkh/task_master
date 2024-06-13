@@ -9,7 +9,6 @@ current_date = datetime.now().strftime("%Y-%m-%d")
 
 # Define payloads
 
-
 post_payload_valid = {
     "title": "Complete API Testing Practice",
     "description": "Write test cases and execute them for API testing practices",

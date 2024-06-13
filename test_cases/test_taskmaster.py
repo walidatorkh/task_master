@@ -1,9 +1,7 @@
-# /tests/test_cases/test_create_task.py
 import os
 import subprocess
 import sys
 import time
-
 import pytest
 import requests
 import data.test_data as data
@@ -12,18 +10,15 @@ url = 'http://localhost:5000'
 
 
 @pytest.fixture(scope="module", autouse=True)
-def start_flask_app():
-    # Use the Python executable from the virtual environment
+def start_dummy_server():
     python_executable = os.path.join(sys.prefix, 'Scripts', 'python.exe')
 
-    # Start the Flask server
     server = subprocess.Popen(
         [python_executable, "C:\\Automation\\task_master\\dummy_server\\pyserver.py"],
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE
     )
 
-    # Wait for the server to start
     time.sleep(15)  # Increase sleep time to ensure server starts
 
     # Check if server started successfully
