@@ -4,7 +4,8 @@ import sys
 import time
 import pytest
 import requests
-import data.test_data as data
+from ..data import test_data as data
+
 
 url = 'http://localhost:5000'
 
