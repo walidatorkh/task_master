@@ -4,6 +4,7 @@
 
 This Python functions checks API calls to the online task management service named
 "TaskMaster" and handles different scenarios.
+In order to be able to test the API's was created dummy server 
 
 1. Installation
 
@@ -84,9 +85,14 @@ request).
 
 ## Test Scenario 3: Get Task
 
-| Test Case ID | Description                                   | Endpoint          | Method | Headers                            | Payload | Expected Status | Actual Status | Pass/Fail | Notes |
+| Test Case ID | Description                                   | Endpoint          | Method | Headers                            | Expected response | Expected Status | Actual Status | Pass/Fail | Notes |
 |--------------|-----------------------------------------------|-------------------|--------|-----------------------------------|---------|-----------------|---------------|-----------|-------|
-| TC_01        | Valid task retrieval                          | /tasks/1          | GET    | Authorization: Bearer 12345       |         | 200             |               |           |       |
+| TC_01        | Valid task retrieval                          | /tasks/1          | GET    | Authorization: Bearer 12345       | {
+            "description": "Revise and enhance test cases for API testing practices",
+            "due_date": current_date,
+            "id": 1,
+            "title": "Update API Testing Practice"
+        }        | 200             |               |           |       |
 | TC_02        | Missing authorization token                   | /tasks/1          | GET    |                                   |         | 500             |               |           |       |
 | TC_03        | Non-existent task ID                          | /tasks/999        | GET    | Authorization: Bearer 12345       |         | 404             |               |           |       |
 | TC_04        | Non-existent URL                              | /tasks/1234       | GET    | Authorization: Bearer 12345       |         | 404             |               |           |       |
