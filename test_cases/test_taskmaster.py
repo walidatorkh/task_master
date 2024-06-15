@@ -2,8 +2,10 @@ import os
 import subprocess
 import sys
 import time
+from datetime import datetime
 import pytest
 import requests
+from assertpy import assert_that
 from ..data import test_data as data
 
 
@@ -101,3 +103,8 @@ def test_get_task(test_input):
     response_time = end_time - start_time
     assert response_time <= 5, f"Response time exceeded: {response_time} seconds"
     assert response.status_code == expected_status
+    # Additional validation for specific test cases
+    if test_id == "TC_01_GET" and response.status_code == 200:
+        json_response = response.json()
+        # Assert the JSON response matches the expected response
+        assert_that(json_response).is_equal_to(data.expected_response)

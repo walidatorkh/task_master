@@ -82,11 +82,19 @@ put_payload_invalid_due_date = {
     "due_date": "invalid-date"  # Invalid date format
 }
 
+expected_response = {
+            "description": "Revise and enhance test cases for API testing practices",
+            "due_date": current_date,
+            "id": 1,
+            "title": "Update API Testing Practice"
+        }
+
 # Headers
 headers = {
     "Content-Type": "application/json",
     "Authorization": "Bearer 12345"
 }
+
 
 headers_invalid = {
     "Content-Type": "",
