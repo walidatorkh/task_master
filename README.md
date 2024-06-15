@@ -1,5 +1,23 @@
 # TaskMaster
 
+## Instructions:
+
+This Python functions checks API calls to the online task management service named
+"TaskMaster" and handles different scenarios.
+
+1. Installation
+
+	1.1 Clone or download the Python script containing the functions (link to code https://github.com/walidatorkh/task_master.git).
+
+	1.2 Ensure you have Python installed on your system. You can download it from [python.org](https://www.python.org/downloads/).
+
+	1.3 Install the required dependencies using pip: pip install -r requirements.txt
+
+2. Execution
+
+	2.1 open CMD and navigate to file location
+	2.2 Execute pytest -v .\test_taskmaster.py
+
 ## Test Plan
 
 ### I am starting from the premise that I have read the specification document, 
@@ -32,6 +50,7 @@ request).
 
 ### 6. Issues
 - The specifications do not describe the URL.
+- Missing specifications describe the errors code that can occur during the API calls (except: 200, 404,500)
 - The server response time is not described in the specifications.
 - The maximum number of requests is not described.
 
