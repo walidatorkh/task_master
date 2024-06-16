@@ -6,6 +6,8 @@ from datetime import datetime
 import pytest
 import requests
 from assertpy import assert_that
+from cerberus import Validator
+
 from ..data import test_data as data
 
 
@@ -96,6 +98,8 @@ def test_update_task(test_input):
     ("TC_05_GET", "Missing value in headers", "/tasks", '/1', "GET", data.headers_invalid, None, 500),
 ])
 def test_get_task(test_input):
+
+    validator = Validator(data.valid_schema, require_all=True)
     test_id, description, endpoint, task_id, method, headers, payload, expected_status = test_input
     start_time = time.time()
     response = requests.get(f"{url}{endpoint}{task_id}", headers=headers)
@@ -106,5 +110,8 @@ def test_get_task(test_input):
     # Additional validation for specific test cases
     if test_id == "TC_01_GET" and response.status_code == 200:
         json_response = response.json()
+        is_valid = validator.validate(response.json())
+        # Assert the JSON schema validation
+        assert_that(is_valid, description=validator.errors).is_true()
         # Assert the JSON response matches the expected response
         assert_that(json_response).is_equal_to(data.expected_response)

@@ -89,6 +89,13 @@ expected_response = {
             "title": "Update API Testing Practice"
         }
 
+valid_schema = {
+        "id": {"type": "number"},
+        "title": {"type": "string"},
+        "description": {"type": "string"},
+        "due_date": {"type": "string"}
+    }
+
 # Headers
 headers = {
     "Content-Type": "application/json",
