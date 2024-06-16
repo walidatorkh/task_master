@@ -8,7 +8,7 @@ In order to be able to test the API's was created dummy server
 
 1. Installation
 
-	1.1 Clone or download the Python script containing the functions (link to code https://github.com/walidatorkh/task_master.git).
+	1.1 Clone or download the Python script containing the functions (link to code ([https://github.com/walidatorkh/task_master.git](https://github.com/walidatorkh/task_master.git)).
 
 	1.2 Ensure you have Python installed on your system. You can download it from [python.org](https://www.python.org/downloads/).
 
@@ -17,6 +17,7 @@ In order to be able to test the API's was created dummy server
 2. Execution
 
 	2.1 open CMD and navigate to file location
+   
 	2.2 Execute pytest -v .\test_taskmaster.py
 
 ## Test Plan
